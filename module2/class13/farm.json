@@ -1,5 +1,6 @@
 [
     {
+<<<<<<< Updated upstream
         "name":"Farm 1",
         "products":["Eggs","Veg","Milk"],
         "registrationNo":124435,
@@ -19,5 +20,26 @@
         "registrationNo":123435,
         "Employees":70,
         "isOperating":true
+=======
+        "name":"Farm 2",
+        "products":["Eggs","Veg","Milk"],
+        "registration No":12345,
+        "Employeer":7,
+        "isOperating": false
+    }
+    {
+        "name":"Farm 3",
+        "products":["Eggs","Milk"],
+        "registration No":34435,
+        "Employeer":7,
+        "isOperating": true
+    }
+    {
+        "name":"Farm 3",
+        "products":["Milk"],
+        "registration No":12453,
+        "Employeer":70,
+        "isOperating": true
+>>>>>>> Stashed changes
     }
 ]
