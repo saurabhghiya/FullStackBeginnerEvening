@@ -19,10 +19,31 @@
 
 // console.log("After");
 
+// function fetchData() {
+//   return new Promise((resolve) => {
+//     setTimeout(() => resolve("Data"), 1000);
+//   });
+// }
+// async function logData() {
+//   const result = await fetchData();
+//   console.log(result);
+// }
+// logData();
+// console.log("End");
 
 
-
-
-
-
+// function debounce(func, delay) {
+//   let timeoutId;
+//   return function () {
+//     clearTimeout(timeoutId);
+//     timeoutId = setTimeout(func, delay);
+//   };
+// }
+// function logMessage(message) {
+//   console.log(message);
+// }
+// const debounceFunction = debounce(logMessage, 300);
+// debounceFunction("Hello");
+// debounceFunction("World");
+// debounceFunction("!");
 
