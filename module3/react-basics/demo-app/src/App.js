@@ -1,14 +1,23 @@
 import './App.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import UserProfile from './components/UserProfile';
-import MyComponent from './components/MyComponent';
-import Counter from './components/Counter';
+import Weather from './components/Weather';
+import AddBtn from './components/AddBtn';
+// import Header from './components/Header';
+// import Footer from './components/Footer';
+// import UserProfile from './components/UserProfile';
+// import MyComponent from './components/MyComponent';
+// import Counter from './components/Counter';
+
+// import Form from './components/Form';
+// import Ue from './components/Ue';
+// import Loading from './components/Loading';
+
 
 function App() {
+  let cities = ['Hanoi','Dubai','Phuket','Pune','Cairo','Istanbul','Milan','Paris','Sydney','Moscow','Reykjavik','Seoul','Miami','Brasilia','Vancouver'];
+
   return (
     <>
-      <div>Hello</div>
+      {/* <div>Hello</div>
       <Header/>
       <Counter />
       <UserProfile name='Alex' age='30' occupation='Instructor' />
@@ -19,7 +28,11 @@ function App() {
       <UserProfile name='Ajay' age='50' occupation='Actor' />
       <UserProfile name='Stokes' age='45' occupation='Cricket' />
       <MyComponent />
-      <Footer name='IMDB Clone'/>
+      <Footer name='IMDB Clone'/> */}
+      {/* <Form /> */}
+      {/* <Ue /> */}
+      {cities.map(el => <Weather key={el} city={el} />)}
+      <AddBtn list = {cities}/>
     </>
     
     // <h1>Hello World</h1>
