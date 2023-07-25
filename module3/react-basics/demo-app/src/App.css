@@ -98,7 +98,7 @@ p{
   padding: 20px;
   margin: 0;
   position: fixed;
-  bottom: 100px;
+  bottom: 40px;
   aspect-ratio: 1/1;
 
   background-color: black;
@@ -114,4 +114,35 @@ p{
 
 .rotate{
   transform: rotate(45deg);
+}
+
+.modal{
+  position: fixed;
+  bottom: 120px;
+  min-width: 250px;
+  background-color: whitesmoke;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: rgba(40,40,40,0.3) 0 0 20px;
+
+  transform: translateY(120%);
+  transition: transform 0.2s ease-in-out;
+}
+
+.option{
+  padding: 8px 5px;
+  border-bottom: 1px solid #eaeaea;
+  cursor: pointer;
+}
+
+.option:hover{
+  background-color: #eee;
+}
+
+.option:last-child{
+  border: none;
+}
+
+.slide{
+  transform: translateY(0);
 }

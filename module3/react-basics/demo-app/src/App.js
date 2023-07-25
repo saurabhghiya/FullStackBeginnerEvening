@@ -1,6 +1,7 @@
 import './App.css';
 import Weather from './components/Weather';
 import AddBtn from './components/AddBtn';
+import Modal from './components/Modal';
 // import Header from './components/Header';
 // import Footer from './components/Footer';
 // import UserProfile from './components/UserProfile';
@@ -32,11 +33,9 @@ function App() {
       {/* <Form /> */}
       {/* <Ue /> */}
       {cities.map(el => <Weather key={el} city={el} />)}
-      <AddBtn list = {cities}/>
+      <Modal list = {cities} />
+      <AddBtn/>
     </>
-    
-    // <h1>Hello World</h1>
-    
   );
 }
 

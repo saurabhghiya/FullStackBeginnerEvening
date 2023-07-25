@@ -1,21 +1,11 @@
-import Modal from "./Modal";
 
-export default function AddBtn(props){
-    // console.log(props);
+export default function AddBtn(){
 
     const addBtnHandler = (e)=>{
         e.target.classList.toggle('rotate');
-        if(e.target.classList.contains('rotate')){
-            console.log('open');
-            const modal = <Modal {...props} />;
-            console.log(modal);
-            
-            }
-        else{
-            console.log('close');
-            const modal = <Modal />;
-            console.log(modal);
-        }
+        const modal =  document.querySelector('.modal');
+        if(e.target.classList.contains('rotate')) modal.classList.add('slide');
+        else modal.classList.remove('slide');
     }
 
     return <div className="add-btn" onClick={addBtnHandler}>+</div>;

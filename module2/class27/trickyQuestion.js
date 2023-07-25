@@ -30,4 +30,13 @@
 //     }
 
 //     fxn(i);
-// }
+// // }
+
+// const person = { 
+//     name: 'John',
+//     sayHello: function () {
+//       console.log(`Hello, ${this.name}!`);
+//      },
+//    };
+//    const greet = person.sayHello;
+//   greet();
