@@ -1,125 +1,145 @@
+import { useState } from "react";
 
 
-export default function Watchlist() {
-    let movies = [
-        {
-            adult: false,
-            backdrop_path: "/ogFIG0fNXEYRQKrpnoRJcXQNX9n.jpg",
-            id: 619930,
-            title: "Narvik",
-            original_language: "no",
-            original_title: "Kampen om Narvik",
-            overview:
-                "April, 1940. The eyes of the world are on Narvik, a small town in northern Norway, a source of the iron ore needed for Hitler's war machine. Through two months of fierce winter warfare, the German leader is dealt with his first defeat.",
-            poster_path: "/gU4mmINWUF294Wzi8mqRvi6peMe.jpg",
-            media_type: "movie",
-            genre_ids: [10752, 18, 36, 28],
-            popularity: 321.063,
-            release_date: "2022-12-25",
-            video: true,
-            vote_average: 7.406,
-            vote_count: 53,
-        },
-        {
-            adult: false,
-            backdrop_path: "/6RCf9jzKxyjblYV4CseayK6bcJo.jpg",
-            id: 804095,
-            title: "The Fabelmans",
-            original_language: "en",
-            original_title: "The Fabelmans",
-            overview:
-                "Growing up in post-World War II era Arizona, young Sammy Fabelman aspires to become a filmmaker as he reaches adolescence, but soon discovers a shattering family secret and explores how the power of films can help him see the truth.",
-            poster_path: "/d2IywyOPS78vEnJvwVqkVRTiNC1.jpg",
-            media_type: "movie",
-            genre_ids: [18],
-            popularity: 163.3,
-            release_date: "2022-11-11",
-            video: false,
-            vote_average: 8.02,
-            vote_count: 561,
-        },
-        {
-            adult: false,
-            backdrop_path: "/fTLMsF3IVLMcpNqIqJRweGvVwtX.jpg",
-            id: 1035806,
-            title: "Detective Knight: Independence",
-            original_language: "en",
-            original_title: "Detective Knight: Independence",
-            overview:
-                "Detective James Knight 's last-minute assignment to the Independence Day shift turns into a race to stop an unbalanced ambulance EMT from imperiling the city's festivities. The misguided vigilante, playing cop with a stolen gun and uniform, has a bank vault full of reasons to put on his own fireworks show... one that will strike dangerously close to Knight's home.",
-            poster_path: "/jrPKVQGjc3YZXm07OYMriIB47HM.jpg",
-            media_type: "movie",
-            genre_ids: [28, 53, 80],
-            popularity: 119.407,
-            release_date: "2023-01-20",
-            video: false,
-            vote_average: 6.6,
-            vote_count: 10,
-        },
-        {
-            adult: false,
-            backdrop_path: "/e782pDRAlu4BG0ahd777n8zfPzZ.jpg",
-            id: 555604,
-            title: "Guillermo del Toro's Pinocchio",
-            original_language: "en",
-            original_title: "Guillermo del Toro's Pinocchio",
-            overview:
-                "During the rise of fascism in Mussolini's Italy, a wooden boy brought magically to life struggles to live up to his father's expectations.",
-            poster_path: "/vx1u0uwxdlhV2MUzj4VlcMB0N6m.jpg",
-            media_type: "movie",
-            genre_ids: [16, 14, 18],
-            popularity: 754.642,
-            release_date: "2022-11-18",
-            video: false,
-            vote_average: 8.354,
-            vote_count: 1694,
-        },
-    ];
+export default function Watchlist({watchlist, setWatchlist, genres}) {
+    
+    let [currentFilter,setCurrentFilter] = useState(0);
+    let [searchInput, setSearchInput] = useState('');
 
+    let ascArrows = document.querySelectorAll('.asc');
+    let descArrows = document.querySelectorAll('.desc');
+
+    if(!watchlist[0].id) return;
+    let genreFilters = [0];
+    for(let obj of watchlist){
+        obj.genre_ids.forEach((id)=>{
+            if(!genreFilters.includes(id)) genreFilters.push(id);
+        });
+        
+    }
+
+    function sortArrowHandler(watchlist,i){
+        let ascBlack = 'asc border-b-[6px] border-black border-x-[6px] border-x-transparent h-0 w-0';
+        let ascGray = 'asc border-b-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0';
+        let descBlack = 'desc border-t-[6px] border-black border-x-[6px] border-x-transparent h-0 w-0';
+        let descGray = 'desc border-t-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0';
+
+        if(descArrows[i].classList.contains('border-black')){
+            watchlist.reverse();
+            descArrows[i].className = descGray;
+            ascArrows[i].className = ascBlack;
+        }
+        else{
+            descArrows[i].className = descBlack;
+            ascArrows[i].className = ascGray;
+        }
+        
+        for(let j=0; j<3; j++){
+            if(i != j){
+                descArrows[j].className = descGray;
+                ascArrows[j].className = ascGray;
+            }
+        }
+    }
+
+    let tableClickHandler = (e) => {
+        if(e.target.innerText == 'Delete'){
+            watchlist = watchlist.filter(obj=>(obj.id != e.target.id))
+        }
+        else if(e.target.closest('.rating')){
+            watchlist.sort((a,b) => a.vote_average - b.vote_average);
+            sortArrowHandler(watchlist,1);            
+        }
+        else if(e.target.closest('.popularity')){
+            watchlist.sort((a,b) => a.popularity - b.popularity);
+            sortArrowHandler(watchlist,2);
+        }
+        else if(e.target.closest('.movie')){
+            watchlist.sort((a,b) => a.title.localeCompare(b.title));
+            sortArrowHandler(watchlist,0);
+        }
+        setWatchlist([...watchlist]);
+    }
+
+    let genreFilterHandler = e => {
+        if(e.target.classList.contains('genre-filters')) return;
+        setCurrentFilter(e.target.id);
+    }
+
+    let searchHandler = e =>{
+        setSearchInput(e.target.value.toLowerCase());
+    }
+
+    // console.log(ascArrows,descArrows);
     return <>
         <div className="w-full text-center">
-            <div className="genres mt-[15px] flex justify-center gap-[10px] font-bold text-gray-700 p-[10px]">
-                <span className="bg-blue-200 px-[20px] py-[5px] cursor-pointer rounded-3xl" >All Genres</span>
-                <span className="bg-blue-200 px-[20px] py-[5px] cursor-pointer rounded-3xl" >Action</span>
-                <span className="bg-blue-200 px-[20px] py-[5px] cursor-pointer rounded-3xl" >Sci-Fi</span>
+            <div className="genre-filters mt-[15px] flex justify-center gap-[10px] font-bold text-gray-700 px-[10%] py-[10px] flex-wrap" onClick={genreFilterHandler}>
+                {
+                    genreFilters.map((id) => {
+                        if(currentFilter == id) return <span key={id} id={id} className="px-[20px] py-[5px] cursor-pointer rounded-3xl bg-neutral-700 text-neutral-200 whitespace-nowrap" >{genres[id]}</span>
+                        return <span key={id} id={id} className="bg-blue-200 px-[20px] py-[5px] cursor-pointer rounded-3xl hover:bg-neutral-700 hover:text-neutral-200 whitespace-nowrap" >{genres[id]}</span>
+                    })
+                }
             </div>
-            <input type="text" className="search mt-[15px] outline-none bg-gray-100 w-[300px] h-[40px] rounded-lg p-[5px] text-center text-[20px] border-[2px]" placeholder="Search Movies" />
+            <input type="text" onChange={searchHandler} className="search mt-[15px] outline-none bg-gray-100 w-[300px] h-[40px] rounded-lg p-[5px] text-center text-[20px] border-[2px]" placeholder="Search Movies" />
         </div>
-        <div className="min-w-[960px] overflow-x-auto overflow-hidden rounded-lg shadow-md border border-gray-200 m-8" >
+        <div className="min-w-[960px] overflow-x-auto overflow-hidden rounded-lg shadow-md border border-gray-200 m-8" onClick={tableClickHandler} >
             <table className="w-full text-center">
                 <thead className="bg-gray-50 text-gray-900 border-b-2">
                     <tr>
-                        <th className="px-2 text-left">Name</th>
-                        <th className="p-2 flex items-center justify-center">
-                            <span className="flex flex-row flex-wrap h-full w-[10px] gap-[3px] mx-[8px]">
-                                <span class="asc border-b-[6px] border-gray-500 border-x-[6px] border-x-transparent  h-0 w-0"></span>
-                                <span class="desc border-t-[6px] border-gray-500 border-x-[6px] border-x-transparent  h-0 w-0"></span>
-                            </span>
-                            <span>Rating</span>
+                        <th className="movie">
+                            <div className="p-2 flex items-center cursor-pointer">
+                                Movie
+                                <span className="flex flex-row flex-wrap h-full w-[10px] gap-[3px] mx-[8px]">
+                                    <span className="asc border-b-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0"></span>
+                                    <span className="desc border-t-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0"></span>
+                                </span>
+                            </div>
                         </th>
-                        <th>Popularity</th>
+                        <th className="rating">
+                            <div className="p-2 flex items-center justify-center cursor-pointer">
+                                Rating
+                                <span className="flex flex-row flex-wrap h-full w-[10px] gap-[3px] mx-[8px]">
+                                    <span className="asc border-b-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0"></span>
+                                    <span className="desc border-t-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0"></span>
+                                </span>
+                            </div>
+                        </th>
+                        <th className="popularity">
+                            <div className="p-2 flex items-center justify-center cursor-pointer">
+                                Popularity
+                                <span className="flex flex-row flex-wrap h-full w-[10px] gap-[3px] mx-[8px]">
+                                    <span className="asc border-b-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0"></span>
+                                    <span className="desc border-t-[6px] border-gray-400 border-x-[6px] border-x-transparent h-0 w-0"></span>
+                                </span>
+                            </div>
+                        </th>
                         <th>Genre</th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody className="text-xl text-neutral-600 ">
                     {
-                        movies.map((movieObj) => {
-                            return <tr className="border-b-2 last:border-0">
+                        watchlist.map((movieObj) => {
+                            if(searchInput && !movieObj.title.toLowerCase().includes(searchInput)) return;
+                            if(currentFilter != 0 && !movieObj.genre_ids.includes(Number(currentFilter))) return;
+                            return <tr key={(movieObj.id*10)+1} className="border-b-2 last:border-0">
                                 <td className="flex items-center gap-[20px] text-left py-[5px] px-[5px]">
                                     <img className="rounded-lg" src={`https://image.tmdb.org/t/p/w185${movieObj.backdrop_path}`} alt="" />
                                     <span className="w-[20vw]">{movieObj.title}</span>
                                 </td>
                                 <td>{movieObj.vote_average}</td>
-                                <td>{movieObj.popularity}</td>
-                                <td>{movieObj.media_type}</td>
-                                <td className="text-red-600 cursor-pointer">Delete</td>
+                                <td>{Math.round(movieObj.popularity)}</td>
+                                <td>{movieObj.genre_ids.map((genre) => {
+                                    return <p key={genre+'-'+movieObj.id}>{genres[genre]}</p>
+                                })}</td>
+                                <td id={movieObj.id} className="text-red-600 cursor-pointer">Delete</td>
                             </tr>
                         })
                     }
                 </tbody>
             </table>
-        </div>;
+        </div>
     </>
 
 }
