@@ -27,7 +27,7 @@ export default function Banner(){
             setIndex(i);
         }
     }
-    if(imageContainer) imageContainer.className = `image-container h-full w-[400%] absolute flex transition-transform duration-500 -translate-x-${index}\/4`;
+    if(imageContainer) imageContainer.className = `image-container h-full w-[400%] absolute flex transition-transform duration-500 translate-${index}`;
 
     return <div className="banner w-full h-[80vh] relative flex items-center overflow-hidden" >
 
@@ -52,5 +52,5 @@ export default function Banner(){
             {n ? data[index].title : ``}
         </div>
         
-    </div>;
+    </div>
 }

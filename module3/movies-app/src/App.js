@@ -4,8 +4,9 @@ import Banner from './components/Banner';
 import Movies from './components/Movies';
 import Navbar from './components/Navbar';
 import Watchlist from './components/Watchlist';
-import { BrowserRouter, Route, Routes, json } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import axios from 'axios';
+import MoviePage from './components/MoviePage';
 
 function App() {
   let temp = {};
@@ -14,12 +15,14 @@ function App() {
 
   let [data,setData] = useState(temp);
   let [pageNo, setPageNo] = useState(1);
-  let [watchlist, setWatchlist] = useState([{}]);
+  let [watchlist, setWatchlist] = useState([]);
   let [genres,setGenres] = useState({});
+  // let [movieId, setMovieId] = useState(0);
 
   useEffect(() => {
     let jsonstring = localStorage.getItem('watchlist');
-    setWatchlist(JSON.parse(jsonstring));
+    let localItem = JSON.parse(jsonstring) || [];
+    setWatchlist(localItem);
 
     const options = {
       method: 'GET',
@@ -45,16 +48,16 @@ function App() {
 
   },[]);
 
+  // console.log(movieId);
+
   return (
     <>
       <BrowserRouter>
         <Navbar />
         <Routes>
-          <Route
+          <Route exact
             path="/"
             element={
-              <>
-                <Banner />
                 <Movies 
                   pageNo = {pageNo}
                   setPageNo = {setPageNo}
@@ -63,10 +66,9 @@ function App() {
                   data = {data}
                   setData = {setData}
                 />
-              </>
             }
           />
-          <Route
+          <Route exact
             path="/watchlist"
             element={
               <Watchlist
@@ -74,6 +76,12 @@ function App() {
                 setWatchlist = {setWatchlist}
                 genres = {genres}
               />
+            }
+          />
+          <Route exact
+            path="/moviepage"
+            element={
+              <MoviePage/>
             }
           />
         </Routes>

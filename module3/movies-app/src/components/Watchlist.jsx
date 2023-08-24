@@ -2,20 +2,21 @@ import { useState } from "react";
 
 
 export default function Watchlist({watchlist, setWatchlist, genres}) {
-    
     let [currentFilter,setCurrentFilter] = useState(0);
     let [searchInput, setSearchInput] = useState('');
 
     let ascArrows = document.querySelectorAll('.asc');
     let descArrows = document.querySelectorAll('.desc');
-
-    if(!watchlist[0].id) return;
     let genreFilters = [0];
-    for(let obj of watchlist){
-        obj.genre_ids.forEach((id)=>{
-            if(!genreFilters.includes(id)) genreFilters.push(id);
-        });
+
+    if(watchlist){
         
+        for(let obj of watchlist){
+            obj.genre_ids.forEach((id)=>{
+                if(!genreFilters.includes(id)) genreFilters.push(id);
+            });
+            
+        }
     }
 
     function sortArrowHandler(watchlist,i){
@@ -44,7 +45,8 @@ export default function Watchlist({watchlist, setWatchlist, genres}) {
 
     let tableClickHandler = (e) => {
         if(e.target.innerText == 'Delete'){
-            watchlist = watchlist.filter(obj=>(obj.id != e.target.id))
+            watchlist = watchlist.filter(obj=>(obj.id != e.target.id));
+            localStorage.setItem('watchlist',JSON.stringify(watchlist));
         }
         else if(e.target.closest('.rating')){
             watchlist.sort((a,b) => a.vote_average - b.vote_average);
@@ -70,7 +72,7 @@ export default function Watchlist({watchlist, setWatchlist, genres}) {
         setSearchInput(e.target.value.toLowerCase());
     }
 
-    // console.log(ascArrows,descArrows);
+    
     return <>
         <div className="w-full text-center">
             <div className="genre-filters mt-[15px] flex justify-center gap-[10px] font-bold text-gray-700 px-[10%] py-[10px] flex-wrap" onClick={genreFilterHandler}>
@@ -120,7 +122,8 @@ export default function Watchlist({watchlist, setWatchlist, genres}) {
                 </thead>
                 <tbody className="text-xl text-neutral-600 ">
                     {
-                        watchlist.map((movieObj) => {
+                        watchlist.length ? watchlist.map((movieObj) => {
+                            if(!movieObj.id) return;
                             if(searchInput && !movieObj.title.toLowerCase().includes(searchInput)) return;
                             if(currentFilter != 0 && !movieObj.genre_ids.includes(Number(currentFilter))) return;
                             return <tr key={(movieObj.id*10)+1} className="border-b-2 last:border-0">
@@ -135,7 +138,7 @@ export default function Watchlist({watchlist, setWatchlist, genres}) {
                                 })}</td>
                                 <td id={movieObj.id} className="text-red-600 cursor-pointer">Delete</td>
                             </tr>
-                        })
+                        }) : null
                     }
                 </tbody>
             </table>
