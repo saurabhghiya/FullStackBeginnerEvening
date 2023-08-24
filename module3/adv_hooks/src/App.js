@@ -1,6 +1,7 @@
 
 import './App.css';
 import List from './components/List';
+import ComponentF from './components/RoughWork';
 import Todo from './components/Todo';
 import TodoReducer from './components/TodoReducer';
 
@@ -10,7 +11,8 @@ function App() {
     {/* <Todo/> */}
     {/* <div>Advance Hooks</div> */}
     {/* <List /> */}
-    <TodoReducer />
+    {/* <TodoReducer /> */}
+      <ComponentF />
     </div>
   );
 }
