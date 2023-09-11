@@ -1,8 +1,5 @@
 const mongoose = require('mongoose');
 
-const password = 'naAqmmEn2MT7zjna';
-
-const db = `mongodb+srv://saurabhghiya:${password}@cluster-sg-app.qmvohsh.mongodb.net/?retryWrites=true&w=majority`
 
 /* 
 incase of errors while connecting replace the connect method with following
