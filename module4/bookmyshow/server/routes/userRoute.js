@@ -54,7 +54,9 @@ router.post('/login', async (req,res)=>{
 
     res.send({
         success:true,
-        message:"User Logged In"
+        message:"User Logged In",
+        greet:`Hello ${user.name}`
+        
     });
 });
 
