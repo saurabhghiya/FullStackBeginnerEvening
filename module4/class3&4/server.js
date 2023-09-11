@@ -7,10 +7,6 @@ const port = 8080;
 const data = JSON.parse(fs.readFileSync('data.json','utf-8'));
 let products = data.products;
 
-app.listen(port, ()=>{
-    console.log(`Server is listening at ${port}`);
-})
-
 app.get('/',(req,res)=>{
     res.send('Hello World');
 })
@@ -36,7 +32,7 @@ app.post('/products',(req,res)=>{
     res.send('data added');
 })
 
-//UPDATE -> put
+//UPDATE -> put and patch
 app.put('/products/:id',(req,res)=>{
     let id = req.params.id;
     let productIndex = products.findIndex(obj => obj.id == id);
