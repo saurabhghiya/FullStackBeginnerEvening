@@ -79,7 +79,7 @@ function App() {
             }
           />
           <Route exact
-            path="/moviepage"
+            path="/moviepage/:movieId"
             element={
               <MoviePage/>
             }

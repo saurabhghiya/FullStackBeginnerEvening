@@ -13,7 +13,7 @@ export default function MovieCard({ id, isWatchlist, posterUrl}) {
             star
         </span>}
         
-        {posterUrl ? <img key={'movieposter'} src={posterUrl} alt="" /> : <Breathing key={'shimmer'} width={200} height={300} />}
+        {posterUrl ? <img id={id} className='movieposter' key={'movieposter'} src={posterUrl} alt="" /> : <Breathing key={'shimmer'} width={200} height={300} />}
 
         
     </div>

@@ -1,12 +1,11 @@
 import MovieCard from "./MovieCard";
 import axios from 'axios';
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import Pagination from "./Pagination";
 import Filters from "./Filters";
-import MoviePage from "./MoviePage";
 import Banner from "./Banner";
-import { Link, Route, Routes, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Movies({ pageNo, setPageNo, watchlist, setWatchlist, data, setData, movieId, setMovieId }) {
 
@@ -45,33 +44,32 @@ export default function Movies({ pageNo, setPageNo, watchlist, setWatchlist, dat
             e.target.classList.add(...activeClass);
             setFilterIndex(filterText.indexOf(e.target.innerText));
         }
-        else if (e.target.innerText == 'star') {
+        else if (e.target.innerText === 'star') {
             let id = Number(e.target.id);
             let newWatchlist = [];
             let checkId = watchlist ? watchlist.reduce((ans, obj) => {
-                return (obj.id == id) | ans;
+                return (obj.id === id) | ans;
             }, false) : false;
 
             if (!checkId) {
                 newWatchlist = data.results.filter((obj) => {
-                    return (obj.id == id);
+                    return (obj.id === id);
                 });
                 newWatchlist = [...watchlist, ...newWatchlist];
             }
             else {
                 newWatchlist = watchlist.filter((obj) => {
-                    return (obj.id != id);
+                    return (obj.id !== id);
                 });
             }
             localStorage.setItem('watchlist', JSON.stringify(newWatchlist));
 
             setWatchlist(newWatchlist);
         }
-    //     else if (parent.classList[0] == 'moviecard') {
-    //         // console.dir(parent.id);
-    //         // setMovieId(parent.id);
-    //         setMovieId(parent.id);
-    //     }
+        else if(e.target.classList.contains('movieposter')){
+            navigate('/moviepage/'+e.target.id);
+            // console.log(e.target.id);
+        }
     }
 
     let key = 0;
@@ -89,9 +87,16 @@ export default function Movies({ pageNo, setPageNo, watchlist, setWatchlist, dat
         <div key={'movielist'} className="movielist w-full max-w-[1120px] flex flex-wrap gap-[20px] px-[20px] mx-auto mt-[10px] justify-center">
             {data.results ? data.results.map((item) => {
                 return (
-                    <Link to="/moviepage" state={{movieId:item.id}} key={item.id | key++}>
-                        <MovieCard key={item.id | key++} id={item.id} isWatchlist={watchlist ? watchlist.reduce((ans, obj) => { return (obj.id == item.id) | ans }, false) : watchlist} posterUrl={item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : ''} />
-                    </Link>
+                    // <Link to="/moviepage" state={{movieId:item.id}} key={item.id | key++}>
+                        <MovieCard 
+                            key={item.id | key++} 
+                            id={item.id} 
+                            isWatchlist={watchlist ? watchlist.reduce((ans, obj) => { 
+                                return (obj.id == item.id) | ans 
+                            }, false) : watchlist} 
+                            posterUrl={item.poster_path ? `https://image.tmdb.org/t/p/w500${item.poster_path}` : ''} 
+                        />
+                    // </Link>
                 )
             }) : null}
         </div>

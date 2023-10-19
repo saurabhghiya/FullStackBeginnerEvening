@@ -1,13 +1,14 @@
 import { useEffect, useState } from "react"
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 export default function MoviePage() {
     let [videoURL, setVideoURL] = useState('');
     let [movieData, setMovieData] = useState(null);
     const location = useLocation();
     const navigate = useNavigate();
-    let { movieId } = location.state;
+    let {movieId} = useParams();
+
 
     useEffect(() => {
         let url = '';
